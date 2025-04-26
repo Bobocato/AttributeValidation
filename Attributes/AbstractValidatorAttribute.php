@@ -5,6 +5,18 @@ require_once 'ValidatorAttribute.php';
 
 class AbstractValidatorAttribute implements ValidatorAttribute
 {
+    /**
+     * @throws ValidationException
+     * @noinspection PhpUnused
+     */
+    public function validate(mixed $request): bool|array
+    {
+        throw new ValidationException('Not implemented');
+    }
+
+    /**
+     * @throws ValidationException
+     */
     protected function getValueFromObject(int|string $key, mixed $request)
     {
         if(is_array($request)){
@@ -16,10 +28,5 @@ class AbstractValidatorAttribute implements ValidatorAttribute
         }
 
         throw new ValidationException(sprintf('Value from Request could not be generated. Type: "%s" Key: "%s"', gettype($request), $key));
-    }
-
-    public function validate(mixed $request): bool|array
-    {
-        throw new ValidationException('Not implemented');
     }
 }

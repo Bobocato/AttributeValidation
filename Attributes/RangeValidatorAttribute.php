@@ -10,10 +10,14 @@ class RangeValidatorAttribute extends AbstractValidatorAttribute
     public const RANGE_MAX = 'max';
 
 
-    public function __construct(private array $parameter)
+    public function __construct(private readonly array $parameter)
     {
     }
 
+    /**
+     * @throws ValidationException
+     * @noinspection PhpUnused
+     */
     public function validate(mixed $request): bool|array
     {
         $errors = [];

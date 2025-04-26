@@ -10,10 +10,14 @@ class TypeValidatorAttribute extends AbstractValidatorAttribute
     public const TYPE_STRING = 'string';
     public const TYPE_INT = 'integer';
 
-    public function __construct(private array $parameter)
+    public function __construct(private readonly array $parameter)
     {
     }
 
+    /**
+     * @throws ValidationException
+     * @noinspection PhpUnused
+     */
     public function validate(mixed $request): bool|array
     {
         $errors = [];
