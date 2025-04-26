@@ -1,0 +1,25 @@
+<?php
+
+require_once 'ValidationException.php';
+require_once 'ValidatorAttribute.php';
+
+class AbstractValidatorAttribute implements ValidatorAttribute
+{
+    protected function getValueFromObject(int|string $key, mixed $request)
+    {
+        if(is_array($request)){
+            return $request[$key];
+        }
+
+        if(is_object($request)){
+            return $request->__get($key);
+        }
+
+        throw new ValidationException(sprintf('Value from Request could not be generated. Type: "%s" Key: "%s"', gettype($request), $key));
+    }
+
+    public function validate(mixed $request): bool|array
+    {
+        throw new ValidationException('Not implemented');
+    }
+}
