@@ -18,26 +18,23 @@ class TypeValidatorAttribute extends AbstractValidatorAttribute
      * @throws ValidationException
      * @noinspection PhpUnused
      */
-    public function validate(mixed $request): bool|array
+    public function validate(mixed $request): ValidationResults
     {
-        $errors = [];
+        $result = new ValidationResults();
 
         foreach ($this->parameter as $key => $param) {
 
             $value = $this->getValueByKey($key, $request);
 
             if (is_null($value)) {
-                return true;
+                $result->add(new ValidationResult($key, true));
             }
 
             if (gettype($value) !== $param) {
-                $errors[] = new ValidationResult($key, sprintf('Value must be of type "%s" is "%s"', $param, gettype($value)), false);
+                $result->add(new ValidationResult($key, false, sprintf('Value must be of type "%s" is "%s"', $param, gettype($value))));
             }
         }
 
-        if (count($errors) === 0) {
-            return true;
-        }
-        return $errors;
+        return $result;
     }
 }

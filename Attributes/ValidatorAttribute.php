@@ -3,6 +3,6 @@
 interface ValidatorAttribute
 {
 
-    public function validate(mixed $request): bool|array;
+    public function validate(mixed $request): ValidationResults;
 
 }

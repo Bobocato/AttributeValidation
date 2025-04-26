@@ -6,20 +6,17 @@ require_once 'Attributes/ValidationResults.php';
 class Test
 {
 
-    #[TypeValidatorAttribute(['teil' => TypeValidatorAttribute::TYPE_STRING, 'integer' => TypeValidatorAttribute::TYPE_INT])]
-    #[RangeValidatorAttribute(['integer' => [RangeValidatorAttribute::RANGE_MIN => 1, RangeValidatorAttribute::RANGE_MAX => 10]])]
+    #[TypeValidatorAttribute(['stringVariable' => TypeValidatorAttribute::TYPE_STRING, 'integerVariable' => TypeValidatorAttribute::TYPE_INT])]
+    #[RangeValidatorAttribute(['integerVariable' => [RangeValidatorAttribute::RANGE_MIN => 1, RangeValidatorAttribute::RANGE_MAX => 10]])]
     public function testing($request): void
     {
-        try {
-            $validationResult = $this->validate($request);
+        $validationResult = $this->validate($request);
 
-            if(!$validationResult->isValid()){
-                throw new Exception('Validation Failed');
+        foreach ($validationResult->getResults() as $result){
+            if(!$result->isValid()){
+                echo $result->getField() . ' ' . $result->getMessage() . PHP_EOL;
             }
-        } catch (Throwable $e) {
-            echo $e->getMessage();
         }
-
     }
 
 
@@ -37,7 +34,8 @@ class Test
         $result = new ValidationResults();
         foreach ($attributes as $attribute) {
             $inst = $attribute->newInstance();
-            $result->add($inst->validate($request));
+            /** @var $inst ValidatorAttribute */
+            $result->merge($inst->validate($request));
         }
         return $result;
     }

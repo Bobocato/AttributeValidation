@@ -1,7 +1,9 @@
 <?php
 
 require_once 'ValidationResult.php';
+require_once 'ValidationResults.php';
 require_once 'AbstractValidatorAttribute.php';
+
 #[Attribute]
 class RangeValidatorAttribute extends AbstractValidatorAttribute
 {
@@ -18,35 +20,32 @@ class RangeValidatorAttribute extends AbstractValidatorAttribute
      * @throws ValidationException
      * @noinspection PhpUnused
      */
-    public function validate(mixed $request): bool|array
+    public function validate(mixed $request): ValidationResults
     {
-        $errors = [];
+        $results = new ValidationResults();
 
-        foreach ($this->parameter as $key => $param){
+        foreach ($this->parameter as $key => $param) {
 
             $value = $this->getValueByKey($key, $request);
 
-            if (is_null($value)){
-                return true;
+            if (is_null($value)) {
+                $results->add(new ValidationResult($key, true));
             }
 
-            if(!is_numeric($value)){
-                 $errors[] = new ValidationResult($key, 'Value must be an integer', false);
+            if (!is_numeric($value)) {
+                $results->add(new ValidationResult($key, false, 'Value must be an integer'));
             }
 
-            if(isset($param[self::RANGE_MIN]) && $value < $param[self::RANGE_MIN]){
-                $errors[] = new ValidationResult($key, 'Value must be greater than ' . $param[self::RANGE_MIN], false);
+            if (isset($param[self::RANGE_MIN]) && $value < $param[self::RANGE_MIN]) {
+                $results->add(new ValidationResult($key, false, 'Value is '. $value .' must be greater than ' . $param[self::RANGE_MIN]));
             }
 
-            if(isset($param[self::RANGE_MAX]) && $value > $param[self::RANGE_MAX]){
-                $errors[] = new ValidationResult($key, 'Value must be less than ' . $param[self::RANGE_MAX], false);
+            if (isset($param[self::RANGE_MAX]) && $value > $param[self::RANGE_MAX]) {
+                $results->add(new ValidationResult($key, false, 'Value is '. $value .' must be less than ' . $param[self::RANGE_MAX]));
             }
         }
 
-        if (count($errors) === 0) {
-            return true;
-        }
-        return $errors;
+        return $results;
     }
 
 

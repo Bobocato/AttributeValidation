@@ -4,8 +4,8 @@ readonly class ValidationResult
 {
 
     public function __construct(private string $field,
-                                private string $message,
-                                private bool   $valid)
+                                private bool   $valid,
+                                private ?string $message = null)
     {
     }
 
@@ -14,7 +14,7 @@ readonly class ValidationResult
         return $this->field;
     }
 
-    public function getMessage(): string
+    public function getMessage(): ?string
     {
         return $this->message;
     }

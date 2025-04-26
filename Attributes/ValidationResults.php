@@ -5,6 +5,11 @@ class ValidationResults
 {
     private array $results = [];
 
+    public function merge(ValidationResults $results): void
+    {
+        $this->results = array_merge($this->results, $results->getResults());
+    }
+
     public function add(ValidationResult $result): void
     {
         $this->results[] = $result;

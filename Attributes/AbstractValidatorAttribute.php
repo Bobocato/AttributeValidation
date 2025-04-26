@@ -9,7 +9,7 @@ class AbstractValidatorAttribute implements ValidatorAttribute
      * @throws ValidationException
      * @noinspection PhpUnused
      */
-    public function validate(mixed $request): bool|array
+    public function validate(mixed $request): ValidationResults
     {
         throw new ValidationException('Not implemented');
     }
