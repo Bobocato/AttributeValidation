@@ -17,7 +17,7 @@ class AbstractValidatorAttribute implements ValidatorAttribute
     /**
      * @throws ValidationException
      */
-    protected function getValueFromObject(int|string $key, mixed $request)
+    protected function getValueByKey(int|string $key, mixed $request)
     {
         if(is_array($request)){
             return $request[$key];

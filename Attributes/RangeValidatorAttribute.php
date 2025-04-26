@@ -24,7 +24,7 @@ class RangeValidatorAttribute extends AbstractValidatorAttribute
 
         foreach ($this->parameter as $key => $param){
 
-            $value = $this->getValueFromObject($key, $request);
+            $value = $this->getValueByKey($key, $request);
 
             if (is_null($value)){
                 return true;
