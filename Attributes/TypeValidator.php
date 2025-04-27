@@ -1,10 +1,11 @@
 <?php
 
-require_once 'ValidationResult.php';
-require_once 'AbstractValidatorAttribute.php';
+namespace Attributes;
+
+use Attribute;
 
 #[Attribute]
-class TypeValidatorAttribute extends AbstractValidatorAttribute
+class TypeValidator extends AbstractValidatorAttribute
 {
 
     public const TYPE_STRING = 'string';

@@ -1,7 +1,6 @@
 <?php
 
-require_once 'ValidationException.php';
-require_once 'ValidatorAttribute.php';
+namespace Attributes;
 
 class AbstractValidatorAttribute implements ValidatorAttribute
 {

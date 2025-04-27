@@ -1,11 +1,11 @@
 <?php
 
-require_once 'ValidationResult.php';
-require_once 'ValidationResults.php';
-require_once 'AbstractValidatorAttribute.php';
+namespace Attributes;
+
+use Attribute;
 
 #[Attribute]
-class RangeValidatorAttribute extends AbstractValidatorAttribute
+class RangeValidator extends AbstractValidatorAttribute
 {
 
     public const RANGE_MIN = 'min';

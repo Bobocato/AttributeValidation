@@ -1,6 +1,7 @@
 <?php
 
-require_once 'ValidationResult.php';
+namespace Attributes;
+
 class ValidationResults
 {
     private array $results = [];

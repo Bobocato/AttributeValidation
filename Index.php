@@ -1,7 +1,5 @@
 <?php
 
-require_once 'Test.php';
-
 echo 'Start :)' . PHP_EOL;
 
 try {
